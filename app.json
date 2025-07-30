@@ -17,7 +17,7 @@
     },
     "android": {
       "package": "tanuraksha.com",
-      "googleServicesFile": "./google-services.json",
+      "googleServicesFile": "./android/app/google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png"
       },
