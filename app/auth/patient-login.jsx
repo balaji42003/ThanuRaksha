@@ -45,7 +45,7 @@ const PatientLoginScreen = () => {
     const configureGoogleSignIn = async () => {
       try {
         GoogleSignin.configure({
-          webClientId: '166658289704-8t31n0pa947fofa5udc9k6tif5n0p63r.apps.googleusercontent.com',
+          webClientId: '425084232868-6d6muuik0hddgq228i96d9aiav7e4jke.apps.googleusercontent.com',
           offlineAccess: false,
           hostedDomain: '',
           loginHint: '',

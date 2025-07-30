@@ -1,4 +1,4 @@
-package tanuraksha.com
+package Balu.com
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

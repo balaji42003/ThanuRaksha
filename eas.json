@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 7.8.6"
+    "version": ">= 7.8.6",
+    "appVersionSource": "local"
   },
   "build": {
     "development": {
@@ -14,7 +15,9 @@
       },
       "env": {
         "GOOGLE_SERVICES_JSON": "file:android/app/google-services.json"
-      }
+      },
+      "prebuildCommand": "npx expo prebuild --platform android --clear",
+      "developmentClient": true
     },
     "production": {
       "android": {
