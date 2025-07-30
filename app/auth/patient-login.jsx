@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import React, { useState, useEffect } from 'react';
-import auth from '@react-native-firebase/auth';
+// import auth from '@react-native-firebase/auth'; // Temporarily disabled for Google Sign-in testing
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import {
   Alert,
@@ -42,41 +42,72 @@ const PatientLoginScreen = () => {
 
   // Configure Google Sign-In
   useEffect(() => {
-    GoogleSignin.configure({
-      webClientId: '166658289704-8t31n0pa947fofa5udc9k6tif5n0p63r.apps.googleusercontent.com',
-    });
+    const configureGoogleSignIn = async () => {
+      try {
+        GoogleSignin.configure({
+          webClientId: '166658289704-8t31n0pa947fofa5udc9k6tif5n0p63r.apps.googleusercontent.com',
+          offlineAccess: false,
+          hostedDomain: '',
+          loginHint: '',
+          forceCodeForRefreshToken: false,
+          accountName: '',
+          iosClientId: '',
+          googleServicePlistPath: '',
+          openIdRealm: '',
+          profileImageSize: 120,
+        });
+        console.log('Google Sign-In configured successfully');
+      } catch (error) {
+        console.error('Google Sign-In configuration error:', error);
+      }
+    };
+    
+    configureGoogleSignIn();
   }, []);
 
   const handleGoogleLogin = async () => {
     try {
       setIsLoading(true);
-
-      // Check if your device supports Google Play
-      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      console.log('Starting Google Sign-In...');
       
-      // Get the users ID token
-      const { idToken } = await GoogleSignin.signIn();
+      // Check if Google Play Services is available
+      const hasPlayServices = await GoogleSignin.hasPlayServices({
+        showPlayServicesUpdateDialog: true,
+      });
+      console.log('Google Play Services available:', hasPlayServices);
 
-      // Create a Google credential with the token
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      // Sign out any existing user first
+      try {
+        await GoogleSignin.signOut();
+        console.log('Previous user signed out');
+      } catch (signOutError) {
+        console.log('No previous user to sign out');
+      }
 
-      // Sign-in the user with the credential
-      const userCredential = await auth().signInWithCredential(googleCredential);
-      const user = userCredential.user;
+      // Attempt Google Sign-In
+      console.log('Attempting Google Sign-In...');
+      const userInfo = await GoogleSignin.signIn();
+      console.log('Google Sign-In successful:', userInfo);
 
-      // Create user session data
+      // Extract user information directly from Google Sign-in (skip Firebase for now)
+      const { user } = userInfo;
+
+      console.log('User data received from Google:', user);
+
+      // Create user session data directly from Google user info
       const userData = {
         userType: 'patient',
         email: user.email,
-        name: user.displayName || 'Google User',
-        photoURL: user.photoURL || null,
-        uid: user.uid,
+        name: user.name || user.givenName + ' ' + user.familyName || 'Google User',
+        photoURL: user.photo || null,
+        uid: user.id,
         loginTime: new Date().toISOString(),
         loginMethod: 'google'
       };
 
       // Store user session
       await AsyncStorage.setItem('userSession', JSON.stringify(userData));
+      console.log('User session stored successfully');
       
       Alert.alert(
         'Login Successful!', 
@@ -91,14 +122,35 @@ const PatientLoginScreen = () => {
       
     } catch (error) {
       console.error('Google login error:', error);
+      console.error('Error code:', error.code);
+      console.error('Error message:', error.message);
       
-      if (error.code === 'auth/account-exists-with-different-credential') {
-        Alert.alert('Account Error', 'An account already exists with the same email address but different sign-in credentials.');
-      } else if (error.code === 'auth/invalid-credential') {
-        Alert.alert('Login Error', 'Invalid credentials. Please try again.');
-      } else {
-        Alert.alert('Login Error', 'Failed to authenticate with Google. Please try again.');
+      let errorMessage = 'An unknown error occurred';
+      
+      switch (error.code) {
+        case 'sign_in_cancelled':
+          errorMessage = 'Sign-in was cancelled';
+          break;
+        case 'sign_in_required':
+          errorMessage = 'Sign-in is required';
+          break;
+        case 'play_services_not_available':
+          errorMessage = 'Google Play Services is not available';
+          break;
+        case 'DEVELOPER_ERROR':
+          errorMessage = 'Configuration error. Please check your Google Services setup.';
+          break;
+        case 'auth/invalid-credential':
+          errorMessage = 'Invalid credentials';
+          break;
+        case 'auth/account-exists-with-different-credential':
+          errorMessage = 'Account exists with different credentials';
+          break;
+        default:
+          errorMessage = error.message || 'Google Sign-In failed';
       }
+      
+      Alert.alert('Login Error', errorMessage);
     } finally {
       setIsLoading(false);
     }
