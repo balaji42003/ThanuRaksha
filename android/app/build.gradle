@@ -87,9 +87,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'tanuraksha.com'
+    namespace 'Balu.com'
     defaultConfig {
-        applicationId 'tanuraksha.com'
+        applicationId 'Balu.com'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

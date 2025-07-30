@@ -16,7 +16,7 @@
       }
     },
     "android": {
-      "package": "tanuraksha.com",
+      "package": "Balu.com",
       "googleServicesFile": "./android/app/google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png"
@@ -24,13 +24,14 @@
       "edgeToEdgeEnabled": true,
       "usesCleartextTraffic": true,
       "permissions": [
-        "INTERNET",
-        "ACCESS_NETWORK_STATE",
-        "CAMERA",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE",
-        "GET_ACCOUNTS",
-        "USE_CREDENTIALS"
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.GET_ACCOUNTS",
+        "android.permission.USE_CREDENTIALS",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
@@ -61,7 +62,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "d6c390d5-8870-4d78-8554-b8cf78457c28"
+        "projectId": "48d588fb-9d19-4d7a-8bfe-8745fff372fa"
       }
     }
   }
