@@ -23,16 +23,14 @@
       "edgeToEdgeEnabled": true,
       "usesCleartextTraffic": true,
       "permissions": [
-        "android.permission.INTERNET",
-        "android.permission.ACCESS_NETWORK_STATE",
-        "android.permission.CAMERA",
-        "android.permission.READ_EXTERNAL_STORAGE",
-        "android.permission.WRITE_EXTERNAL_STORAGE",
-        "android.permission.GET_ACCOUNTS",
-        "android.permission.USE_CREDENTIALS",
-        "android.permission.RECORD_AUDIO"
-      ],
-      "googleServicesFile": "./android/app/google-services.json"
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "GET_ACCOUNTS",
+        "USE_CREDENTIALS"
+      ]
     },
     "web": {
       "bundler": "metro",
