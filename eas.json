@@ -16,7 +16,6 @@
       "env": {
         "GOOGLE_SERVICES_JSON": "file:android/app/google-services.json"
       },
-      "prebuildCommand": "npx expo prebuild --platform android --clear",
       "developmentClient": true
     },
     "production": {
