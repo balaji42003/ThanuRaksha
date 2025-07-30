@@ -15,8 +15,7 @@
       },
       "env": {
         "GOOGLE_SERVICES_JSON": "file:android/app/google-services.json"
-      },
-      "developmentClient": true
+      }
     },
     "production": {
       "android": {
