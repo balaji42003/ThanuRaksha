@@ -8,35 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:166658289704:android:204cc25f365a8a05d9051d",
-        "android_client_info": {
-          "package_name": "ThanuRaksha.com"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "166658289704-8t31n0pa947fofa5udc9k6tif5n0p63r.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCv9--gtaM_sL7-pwdqglzhTurrexm9w5M"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "166658289704-8t31n0pa947fofa5udc9k6tif5n0p63r.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:166658289704:android:5750058cc2d6432ad9051d",
         "android_client_info": {
           "package_name": "tanuraksha.com"
@@ -44,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "166658289704-e7or8nuqngtpcihq3phvujv4h1vo9s7m.apps.googleusercontent.com",
+          "client_id": "166658289704-m88h80tcnv7q76h80iultin6s84hga79.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "tanuraksha.com",
-            "certificate_hash": "f199274e7c384e277eec523e3f448d2590c71a5d"
+            "certificate_hash": "8cd02e60ca276cff968aef6d6a9f8c4bce63bdab"
           }
         },
         {
