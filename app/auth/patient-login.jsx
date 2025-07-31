@@ -1,4 +1,3 @@
-
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
@@ -69,7 +68,7 @@ const PatientLoginScreen = () => {
     try {
       setIsLoading(true);
       console.log('Starting Google Sign-In...');
-      
+
       // Check if Google Play Services is available
       const hasPlayServices = await GoogleSignin.hasPlayServices({
         showPlayServicesUpdateDialog: true,
@@ -89,16 +88,26 @@ const PatientLoginScreen = () => {
       const userInfo = await GoogleSignin.signIn();
       console.log('Google Sign-In successful:', userInfo);
 
-      // Extract user information directly from Google Sign-in (skip Firebase for now)
-      const { user } = userInfo;
+      // Defensive: check userInfo and user
+      if (!userInfo || !userInfo.user) {
+        Alert.alert('Login Error', 'No user info returned from Google.');
+        setIsLoading(false);
+        return;
+      }
 
+      const { user } = userInfo;
+      if (!user.email) {
+        Alert.alert('Login Error', 'Google account did not return an email.');
+        setIsLoading(false);
+        return;
+      }
       console.log('User data received from Google:', user);
 
       // Create user session data directly from Google user info
       const userData = {
         userType: 'patient',
         email: user.email,
-        name: user.name || user.givenName + ' ' + user.familyName || 'Google User',
+        name: user.name || ((user.givenName || '') + ' ' + (user.familyName || '')) || 'Google User',
         photoURL: user.photo || null,
         uid: user.id,
         loginTime: new Date().toISOString(),
@@ -108,9 +117,9 @@ const PatientLoginScreen = () => {
       // Store user session
       await AsyncStorage.setItem('userSession', JSON.stringify(userData));
       console.log('User session stored successfully');
-      
+
       Alert.alert(
-        'Login Successful!', 
+        'Login Successful!',
         `Welcome ${userData.name}!`,
         [
           {
@@ -119,14 +128,14 @@ const PatientLoginScreen = () => {
           }
         ]
       );
-      
+
     } catch (error) {
       console.error('Google login error:', error);
       console.error('Error code:', error.code);
       console.error('Error message:', error.message);
-      
+
       let errorMessage = 'An unknown error occurred';
-      
+
       switch (error.code) {
         case 'sign_in_cancelled':
           errorMessage = 'Sign-in was cancelled';
@@ -149,7 +158,7 @@ const PatientLoginScreen = () => {
         default:
           errorMessage = error.message || 'Google Sign-In failed';
       }
-      
+
       Alert.alert('Login Error', errorMessage);
     } finally {
       setIsLoading(false);
@@ -370,10 +379,6 @@ const styles = StyleSheet.create({
     borderColor: '#E5E7EB',
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 4,
     elevation: 2,
